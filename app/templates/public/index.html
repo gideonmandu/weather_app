@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block header %}
+<div class="container">
+    <div class="row  align-items-end">
+        <div class="name col">
+            <h1>Weather App</h1>
+        </div>
+    
+        <div class="search col">
+            <form action="#" method="post">
+                <label for="search_box">Enter City Name</label>
+                <input type="search" name="search" id="search_box" placeholder="City Name">
+                <input type="submit" value="Search">
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+{% endblock %}
+    {% block section1 %}
+    {% if  message %}
+        <div class="row align-items-center">
+            <p>{{ message }}</p>
+        </div>
+    {% elif location_data %}
+        <div class="city row align-items-center">
+            <div class="city-info col">
+                <h3 class="city-name row align-items-center">{{ location_data['name'] }}</h3>
+                <div class="city-coordinates row align-items-center">
+                    <p id="lat col">Latitude: {{ location_data['coord']['lat'] }}</p>
+                    <p id="lon col">Longitude: {{ location_data['coord']['lon'] }}</p>
+                </div>
+            </div>
+            <div class="city-time col">
+                <div class="time-date row align-items-center">
+                    <p class="time-date-country col">Country code: {{ location_data['sys']['country'] }}</p>
+                    <p class="time-date-time col">Time: {{ time }}</p>
+                    <p class="time-date-date col">Date: {{ date }}</p>
+                </div>
+                <div class="sun row align-items-center">
+                    <p class="sun-rise col">Sunrise: {{ sunrise }}</p>
+                    <p class="sun-set col">Sunset: {{ sunset }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="weather">
+            <div class="row align-items-center">
+                <div class="weather-temp col">
+                    <h4>Temperature</h4>
+                    <p class="temp">Temp: {{ location_data['main']['temp'] }}<sup>o</sup> Celsius</p>
+                    <p class="temp-feels_like">Feels Like: {{ location_data['main']['feels_like'] }}<sup>o</sup> Celsius</p>
+                    <p class="temp-min">Min Temp: {{ location_data['main']['temp_min'] }}<sup>o</sup> Celsius</p>
+                    <p class="temp-max">Max Temp: {{ location_data['main']['temp_max'] }}<sup>o</sup> Celsius</p>
+                </div>
+                <div class="weather-precipitation col">
+                    <h4>Precipitation</h4>
+                    <p class="humidity">Humidity: {{ location_data['main']['humidity'] }} %</p>
+                    {% if 'rain' in location_data and '3h' in location_data['rain'] %}
+                        <p class="rain">Rain volume for the last 3 hour: {{ location_data['rain']['3h'] }} mm</p>
+                    {% elif if 'rain' in location_data and '1h' in location_data['rain'] %}
+                        <p class="rain">Rain volume for the last 1 hour: {{ location_data['rain']['1h'] }} mm</p>
+                    {% else %}
+                    <p></p>
+                    {% endif %}
+                    <p class="rain">Weather {{ location_data['weather'][0]['main'] }} description: {{ location_data['weather'][0]['description'] }}</p>
+                    <p class="visibility">Visibility: {{ location_data['visibility'] }}</p>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="weather-wind col">
+                    <h4>Wind</h4>
+                    <p class="wind-speed">Wind speed: {{ location_data['wind']['speed'] }} m/s</p>
+                    <p class="wind-deg">Wind Direction: {{ location_data['wind']['deg'] }} <sup>o</sup> deg</p>
+                    <p class="wind-gust">Wind gust:</p>
+                    <p class="wind-cloud">Cloudiness: {{ location_data['clouds']['all'] }} %</p>
+                </div>
+                <div class="weather-pressure col">
+                    <h4>Pressure</h4>
+                    <p class="pressure">Pressure sea level: {{ location_data['main']['pressure'] }} hPa</p>
+                    <!-- <p class="pressure-sea_level">Pressure sea level: </p>
+                    <p class="pressure-grnd_level">Pressure ground Level: </p> -->
+                </div>
+            </div>
+            <div class="weather-prediction">
+                <h4>5 Day Prediction</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Day1</th>
+                            <th>Day2</th>
+                            <th>Day3</th>
+                            <th>Day4</th>
+                            <th>Day5</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Rain/Temp</td>
+                            <td>Rain/Temp</td>
+                            <td>Rain/Temp</td>
+                            <td>Rain/Temp</td>
+                            <td>Rain/Temp</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="map">
+            <h4>Map</h4>
+            Map
+        </div>
+    {% else %}
+        <div class="row">
+            <p>Search City above to get weather it's Insight.</p>
+        </div>
+    {% endif %}
+{% endblock %}
