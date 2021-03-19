@@ -27,8 +27,8 @@
             <div class="city-info col">
                 <h3 class="city-name row align-items-center">{{ location_data['name'] }}</h3>
                 <div class="city-coordinates row align-items-center">
-                    <p id="lat col">Latitude: {{ location_data['coord']['lat'] }}</p>
-                    <p id="lon col">Longitude: {{ location_data['coord']['lon'] }}</p>
+                    <p id="lat col"  style="margin-right: 1rem;">Lat: {{ location_data['coord']['lat'] }} </p>
+                    <p id="lon col"> Lon: {{ location_data['coord']['lon'] }}</p>
                 </div>
             </div>
             <div class="city-time col">
@@ -45,43 +45,59 @@
         </div>
         <div class="weather">
             <div class="row align-items-center">
-                <div class="weather-temp col">
+                <article class="weather-temp col">
                     <h4>Temperature</h4>
                     <p class="temp">Temp: {{ location_data['main']['temp'] }}<sup>o</sup> Celsius</p>
                     <p class="temp-feels_like">Feels Like: {{ location_data['main']['feels_like'] }}<sup>o</sup> Celsius</p>
                     <p class="temp-min">Min Temp: {{ location_data['main']['temp_min'] }}<sup>o</sup> Celsius</p>
                     <p class="temp-max">Max Temp: {{ location_data['main']['temp_max'] }}<sup>o</sup> Celsius</p>
-                </div>
-                <div class="weather-precipitation col">
+                </article>
+                <article class="weather-precipitation col">
                     <h4>Precipitation</h4>
                     <p class="humidity">Humidity: {{ location_data['main']['humidity'] }} %</p>
-                    {% if 'rain' in location_data and '3h' in location_data['rain'] %}
-                        <p class="rain">Rain volume for the last 3 hour: {{ location_data['rain']['3h'] }} mm</p>
-                    {% elif if 'rain' in location_data and '1h' in location_data['rain'] %}
-                        <p class="rain">Rain volume for the last 1 hour: {{ location_data['rain']['1h'] }} mm</p>
+                    {% if 'rain' in location_data %}
+                        {% if '3h' in location_data['rain'] %}
+                            <p class="rain">Rain volume for the last 3 hour: {{ location_data['rain']['3h'] }} mm</p>
+                        {% else %}
+                            <p class="rain">Rain volume for the last 1 hour: {{ location_data['rain']['1h'] }} mm</p>
+                        {% endif %}
+                    {%elif 'snow' in location_data %}
+                        {% if '3h' in location_data['snow'] %}
+                            <p class="snow">Snow volume for the last 3 hour: {{ location_data['snow']['3h'] }} mm</p>
+                        {% else %}
+                            <p class="snow">Snow volume for the last 1 hour: {{ location_data['snow']['1h'] }} mm</p>
+                        {% endif %}
                     {% else %}
-                    <p></p>
+                        <p></p>
                     {% endif %}
-                    <p class="rain">Weather {{ location_data['weather'][0]['main'] }} description: {{ location_data['weather'][0]['description'] }}</p>
+                    <p class="rain">{{ location_data['weather'][0]['main'] }} : {{ location_data['weather'][0]['description'] }}</p>
                     <p class="visibility">Visibility: {{ location_data['visibility'] }}</p>
-                </div>
+                </article>
             </div>
             <div class="row align-items-center">
-                <div class="weather-wind col">
+                <article class="weather-wind col">
                     <h4>Wind</h4>
                     <p class="wind-speed">Wind speed: {{ location_data['wind']['speed'] }} m/s</p>
                     <p class="wind-deg">Wind Direction: {{ location_data['wind']['deg'] }} <sup>o</sup> deg</p>
-                    <p class="wind-gust">Wind gust:</p>
+                    {% if 'gust' in location_data['wind'] %}
+                        <p class="wind-gust">Wind gust: {{ location_data['wind']['gust'] }} m/s</p>
+                    {% else %}
+                        <p></p>
+                    {% endif %}
                     <p class="wind-cloud">Cloudiness: {{ location_data['clouds']['all'] }} %</p>
-                </div>
-                <div class="weather-pressure col">
+                </article>
+                <article class="weather-pressure col">
                     <h4>Pressure</h4>
                     <p class="pressure">Pressure sea level: {{ location_data['main']['pressure'] }} hPa</p>
-                    <!-- <p class="pressure-sea_level">Pressure sea level: </p>
-                    <p class="pressure-grnd_level">Pressure ground Level: </p> -->
-                </div>
+                    {% if 'sea_level' in location_data['main'] or 'grnd_level' in location_data['main'] %}
+                        <p class="pressure-sea_level">Pressure sea level: {{ location_data['main']['sea_level'] }} hPa</p>
+                        <p class="pressure-grnd_level">Pressure ground Level: {{ location_data['main']['.grnd_level'] }} hPa</p>
+                    {% else %}
+                        <p></p>
+                    {% endif %}
+                </article>
             </div>
-            <div class="weather-prediction">
+            <article class="weather-prediction">
                 <h4>5 Day Prediction</h4>
                 <table>
                     <thead>
@@ -103,7 +119,7 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </article>
         </div>
         <div class="map">
             <h4>Map</h4>

@@ -7,27 +7,21 @@ import pprint
 from datetime import datetime
 
 
-def api_current(city_name:str) -> 'responce object':
+def api_current(city_name: str) -> 'responce object':
     API_key = '436def745939eb9ec905541ccadac792'
     return requests.get(
-        # f'https://api.openweathermap.org/data/2.5/forecast?q={city_name}&units=metric&appid={API_key}'
-        f'https://api.openweathermap.org/data/2.5/weather?q={city_name}&units=metric&appid={API_key}'
-    )
-
-def api_5days(city_name:str) -> 'responce object':
-    API_key = '436def745939eb9ec905541ccadac792'
-    return requests.get(
-        f'https://api.openweathermap.org/data/2.5/forecast?q={city_name}&units=metric&appid={API_key}'
+        url=f'https://api.openweathermap.org/data/2.5/weather?q={city_name}&units=metric&appid={API_key}'
     )
 
 
-resp = api_current(city_name='sydney')
-print(datetime.now().date())
-print(datetime.now().time() >= datetime.utcfromtimestamp(1615982400).time())
-datetime.utcoffset
-pprint.pprint(resp.json())
-print(type(resp))
-bp = Blueprint('home', __name__)
+def api_5days(city_name: str) -> 'responce object':
+    API_key = '436def745939eb9ec905541ccadac792'
+    return requests.get(
+        url=f'https://api.openweathermap.org/data/2.5/forecast?q={city_name}&units=metric&appid={API_key}'
+    )
+
+
+bp = Blueprint(name='home', import_name=__name__)
 
 
 @bp.route('/', methods=('GET', 'POST'))
@@ -52,3 +46,11 @@ def index():
         return render_template('public/index.html', message=message)
 
     return render_template('public/index.html', location_data=location_data, time=time, date=date, sunrise=sr, sunset=ss)
+
+
+# resp = api_current(city_name='moscow')
+# print(datetime.now().date())
+# print(datetime.now().time() >= datetime.utcfromtimestamp(1615982400).time())
+# datetime.utcoffset
+# pprint.pprint(resp.json())
+# print(type(resp))
