@@ -21,6 +21,14 @@ def api_5days(city_name: str) -> 'responce object':
     )
 
 
+def week_day(day: int) -> str:
+    """
+    Takes an index for week days
+    """
+    week = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    return week[day]
+
+
 bp = Blueprint(name='home', import_name=__name__)
 
 
@@ -40,12 +48,29 @@ def index():
         date = datetime.fromtimestamp(location_data['dt']).date()
         ss = datetime.fromtimestamp(location_data['sys']['sunset']).time()
         sr = datetime.fromtimestamp(location_data['sys']['sunrise']).time()
+
+        items = api_5days(city_name=city).json()['list']
+        days = [
+            [
+                item
+                for item in items
+                if datetime.fromtimestamp(item['dt']).date() > datetime.fromtimestamp(items[0]['dt']).date()
+                and datetime.utcfromtimestamp(item['dt']).time()
+                == datetime(2021, 4, 20, 0, 0, 0).time()
+            ]
+        ]
+        days_names = []
+        for day in days[0]:
+            d = datetime.fromtimestamp(day['dt']).weekday()
+            days_names.append(week_day(d))
+
+        days.append(days_names)
     else:
         print('NO data for current Location')
         message = 'No data for Location Provided'
         return render_template('public/index.html', message=message)
 
-    return render_template('public/index.html', location_data=location_data, time=time, date=date, sunrise=sr, sunset=ss)
+    return render_template('public/index.html', location_data=location_data, time=time, date=date, sunrise=sr, sunset=ss, days=days)
 
 
 # resp = api_current(city_name='moscow')
