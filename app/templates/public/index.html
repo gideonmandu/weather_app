@@ -24,22 +24,24 @@
         </div>
     {% elif location_data %}
         <div class="city row align-items-center">
-            <div class="city-info col">
-                <h3 class="city-name row align-items-center">{{ location_data['name'] }}</h3>
-                <div class="city-coordinates row align-items-center">
+            <div class="city__info col">
+                <h3 class="city__name row align-items-center">{{ location_data['name'] }}</h3>
+                <div class="city__coordinates row align-items-center">
                     <p id="lat col"  style="margin-right: 1rem;">Lat: {{ location_data['coord']['lat'] }} </p>
                     <p id="lon col"> Lon: {{ location_data['coord']['lon'] }}</p>
                 </div>
             </div>
-            <div class="city-time col">
-                <div class="time-date row align-items-center">
-                    <p class="time-date-country col">Country code: {{ location_data['sys']['country'] }}</p>
-                    <p class="time-date-time col">Time: {{ time }}</p>
-                    <p class="time-date-date col">Date: {{ date }}</p>
+            <div class="col">
+                <p class="city__country_code">Country code: {{ location_data['sys']['country'] }}</p>
+            </div>
+            <div class="city__time col">
+                <div class="city__time_date row align-items-center">
+                    <p class="city__time col">Time: {{ time }}</p>
+                    <p class="city__date col">Date: {{ date }}</p>
                 </div>
                 <div class="sun row align-items-center">
-                    <p class="sun-rise col">Sunrise: {{ sunrise }}</p>
-                    <p class="sun-set col">Sunset: {{ sunset }}</p>
+                    <p class="sun__rise col">Sunrise: {{ sunrise }}</p>
+                    <p class="sun__set col">Sunset: {{ sunset }}</p>
                 </div>
             </div>
         </div>
@@ -111,11 +113,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ days[0][0]['weather'][0]['main'] }} {{ days[0][0]['weather'][0]['description'] }} | Temp {{ days[0][0]['main']['temp'] }}</td>
-                            <td>{{ days[0][1]['weather'][0]['main'] }} {{ days[0][1]['weather'][0]['description'] }} | Temp {{ days[0][1]['main'][main] }}</td>
-                            <td>{{ days[0][2]['weather'][0]['main'] }} {{ days[0][2]['weather'][0]['description'] }} | Temp {{ days[0][2]['main'][main] }}</td>
-                            <td>{{ days[3]['weather'][0]['main'] }} {{ days[3]['weather'][0]['description'] }} | Temp {{ days[3]['main'][main] }}</td>
-                            <td>{{ days[4]['weather'][0]['main'] }} {{ days[4]['weather'][0]['description'] }} | Temp {{ days[4]['main'][main] }}</td>
+                            <td>{{ days[0][0]['weather'][0]['main'] }}: {{ days[0][0]['weather'][0]['description'] }} <br> Temp {{ days[0][0]['main']['temp'] }}<sup>o</sup> Celsius</td>
+                            <td>{{ days[0][1]['weather'][0]['main'] }}: {{ days[0][1]['weather'][0]['description'] }} <br> Temp {{ days[0][1]['main']['temp'] }}<sup>o</sup> Celsius</td>
+                            <td>{{ days[0][2]['weather'][0]['main'] }}: {{ days[0][2]['weather'][0]['description'] }} <br> Temp {{ days[0][2]['main']['temp'] }}<sup>o</sup> Celsius</td>
+                            <td>{{ days[0][3]['weather'][0]['main'] }}: {{ days[0][3]['weather'][0]['description'] }} <br> Temp {{ days[0][3]['main']['temp'] }}<sup>o</sup> Celsius</td>
+                            <td>{{ days[0][4]['weather'][0]['main'] }}: {{ days[0][4]['weather'][0]['description'] }} <br> Temp {{ days[0][4]['main']['temp'] }}<sup>o</sup> Celsius</td>
                         </tr>
                     </tbody>
                 </table>
