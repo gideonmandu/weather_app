@@ -49,10 +49,10 @@
             <div class="row align-items-center">
                 <article class="weather-temp col">
                     <h4>Temperature</h4>
-                    <p class="temp">Temp: {{ location_data['main']['temp'] }}<sup>o</sup> Celsius</p>
-                    <p class="temp-feels_like">Feels Like: {{ location_data['main']['feels_like'] }}<sup>o</sup> Celsius</p>
-                    <p class="temp-min">Min Temp: {{ location_data['main']['temp_min'] }}<sup>o</sup> Celsius</p>
-                    <p class="temp-max">Max Temp: {{ location_data['main']['temp_max'] }}<sup>o</sup> Celsius</p>
+                    <p class="temp">Temp: {{ location_data['main']['temp'] }}<sup>o</sup> C</p>
+                    <p class="temp-feels_like">Feels Like: {{ location_data['main']['feels_like'] }}<sup>o</sup> C</p>
+                    <p class="temp-min">Min Temp: {{ location_data['main']['temp_min'] }}<sup>o</sup> C</p>
+                    <p class="temp-max">Max Temp: {{ location_data['main']['temp_max'] }}<sup>o</sup> C</p>
                 </article>
                 <article class="weather-precipitation col">
                     <h4>Precipitation</h4>
@@ -104,21 +104,26 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>{{ days[1][0] }}</th>
-                            <th>{{ days[1][1] }}</th>
-                            <th>{{ days[1][2] }}</th>
-                            <th>{{ days[1][3] }}</th>
-                            <th>{{ days[1][4] }}</th>
+                            {% for day in days[1] %}
+                                <th>{{ day }}</th>
+                            {% endfor %}
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>{{ days[0][0]['weather'][0]['main'] }}: {{ days[0][0]['weather'][0]['description'] }} <br> Temp {{ days[0][0]['main']['temp'] }}<sup>o</sup> Celsius</td>
-                            <td>{{ days[0][1]['weather'][0]['main'] }}: {{ days[0][1]['weather'][0]['description'] }} <br> Temp {{ days[0][1]['main']['temp'] }}<sup>o</sup> Celsius</td>
-                            <td>{{ days[0][2]['weather'][0]['main'] }}: {{ days[0][2]['weather'][0]['description'] }} <br> Temp {{ days[0][2]['main']['temp'] }}<sup>o</sup> Celsius</td>
-                            <td>{{ days[0][3]['weather'][0]['main'] }}: {{ days[0][3]['weather'][0]['description'] }} <br> Temp {{ days[0][3]['main']['temp'] }}<sup>o</sup> Celsius</td>
-                            <td>{{ days[0][4]['weather'][0]['main'] }}: {{ days[0][4]['weather'][0]['description'] }} <br> Temp {{ days[0][4]['main']['temp'] }}<sup>o</sup> Celsius</td>
-                        </tr>
+                            <tr>
+                                {% for day in days[0] %}
+                                    <td>
+                                        {{ day['weather'][0]['main'] }}: {{ day['weather'][0]['description'] }}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                            <tr>
+                                {% for day in days[0] %}
+                                    <td>
+                                        Temp {{ day['main']['temp'] }}<sup>o</sup> C
+                                    </td>
+                                {% endfor %}
+                            </tr>
                     </tbody>
                 </table>
             </article>
